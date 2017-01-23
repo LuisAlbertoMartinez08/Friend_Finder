@@ -4,8 +4,8 @@ var app = express();
 
 var PORT = 8000;
 
-var reserve = require('./app/routing/apiRouting');
-var tables = require('./app/routing/htmlRouting');
+var reserve = require('./app/routing/apiRoutes');
+var tables = require('./app/routing/htmlRoutes');
 
 app.use(reserve);
 app.use(tables);
