@@ -1,15 +1,22 @@
 var express = require('express');
-var bodyParser = require('body-parser');
 var app = express();
+var bodyParser = require('body-parser');
 
-var PORT = 8000;
 
-var reserve = require('./app/routing/apiRoutes');
-var tables = require('./app/routing/htmlRoutes');
+var PORT = process.env.PORT || 8000;
 
-app.use(reserve);
-app.use(tables);
+var jsonParser = bodyParser.json()
 
-app.listen(PORT, function () {
-	console.log('Server listening on port:', PORT);
+var urlEncodedParser = bodyParser.urlencoded({ extended: false });
+
+app.use(bodyParser.json({ type:'application/*+json' }))
+
+app.use(bodyParser.raw({ type: 'application/vnd.custom-type'}))
+
+app.use(bodyParser.text({ type: 'text/html' }))
+
+require("./app/routing/htmlRoutes.js")(app);
+
+app.listen(	PORT, function(){
+	console.log("app listening on PORT: " + PORT);
 });
